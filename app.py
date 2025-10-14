@@ -177,11 +177,16 @@ def block_android_from_route():
     return False
 
 @app.before_request
+def redirect_to_sunset():
+    if request.path != '/sunset' and not request.path.startswith('/static'):
+        return redirect(url_for('sunset'))
+
+@app.before_request
 def android_route_blocker():
     
     allowed_paths = ['/android', '/ads.txt', '/cancel_request', 
                      '/cancel_request_beacon', '/queue_heartbeat', '/queue_cleanup', '/queue_stats',
-                     '/test-android-detection', '/clear-android-session', '/admin']
+                     '/test-android-detection', '/clear-android-session', '/admin', '/sunset']
     
     path_allowed = any(request.path.startswith(path) for path in allowed_paths)
     
@@ -215,6 +220,10 @@ def check_maintenance():
             script_js=SCRIPT_JS_CONTENT
         )
     return None
+
+@app.route('/sunset')
+def sunset():
+    return render_template('sunset.html')
 
 @app.route('/ads.txt')
 def ads_txt():

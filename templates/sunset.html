@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunset | Train Seat</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@100..900&family=Plus+Jakarta+Sans:wght@200..800&display=swap" rel="stylesheet">
+    <link rel="icon"
+        href="https://raw.githubusercontent.com/nishatrhythm/Bangladesh-Railway-Train-and-Fare-List-with-Route-Map/main/images/bangladesh-railway.png"
+        type="image/x-icon" sizes="30x30">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans Bengali', 'SolaimanLipi', 'Kalpurush', Arial, sans-serif;
+            line-height: 1.8;
+            background-color: #f7f9fc;
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        body.lang-en {
+            font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #006747 0%, #008080 100%);
+            padding: 60px 40px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .language-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 5px;
+            z-index: 2;
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .lang-btn.active {
+            background: white;
+            color: #006747;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1) rotate(0deg);
+            }
+            50% {
+                transform: scale(1.4) rotate(180deg);
+            }
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.4em;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .date {
+            font-size: 1em;
+            opacity: 0.8;
+            margin-top: 5px;
+            position: relative;
+            z-index: 1;
+            font-weight: 400;
+        }
+
+        .content {
+            padding: 50px 40px;
+            line-height: 1.8;
+        }
+
+        .content h2 {
+            color: #006747;
+            font-size: 1.8em;
+            margin: 30px 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #d4e9dc;
+            display: inline-block;
+        }
+
+        .content p {
+            font-size: 1.1em;
+            text-align: justify;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .footer {
+            background: #006747;
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .footer h3 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .footer p {
+            font-size: 1.1em;
+            margin: 10px 0;
+            color: #e6f0ea;
+        }
+
+        .contact-links {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: #ffffff;
+            color: #006747;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0, 103, 71, 0.1);
+            border: 2px solid #e6f0ea;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .contact-btn:hover {
+            background: #f8f9fa;
+            box-shadow: 0 4px 16px rgba(0, 103, 71, 0.2);
+            border-color: #006747;
+            color: #005757;
+        }
+
+        .contact-btn i {
+            font-size: 18px;
+        }
+
+        .emoji {
+            font-size: 1.3em;
+            margin: 0 5px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+                background-color: #f7f9fc;
+            }
+
+            .header {
+                padding: 60px 20px 40px 20px;
+            }
+
+            .header::before {
+                background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+                animation: pulse 12s ease-in-out infinite;
+                width: 120%;
+                height: 120%;
+                top: -10%;
+                left: -10%;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .header p {
+                font-size: 1.1em;
+            }
+
+            .header .date {
+                font-size: 0.9em;
+            }
+
+            .language-toggle {
+                top: 15px;
+                right: 15px;
+                padding: 4px;
+            }
+
+            .lang-btn {
+                padding: 6px 12px;
+                font-size: 14px;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .content h2 {
+                font-size: 1.4em;
+            }
+
+            .content p {
+                font-size: 1em;
+            }
+
+            .footer {
+                padding: 30px 20px;
+                background: #006747;
+            }
+
+            .contact-links {
+                gap: 15px;
+                justify-content: center;
+            }
+
+            .contact-btn {
+                padding: 14px 20px;
+                font-size: 14px;
+                min-width: 120px;
+            }
+
+            .contact-btn i {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 70px 20px 40px 20px;
+            }
+
+            .language-toggle {
+                top: 10px;
+                right: 10px;
+                padding: 3px;
+                border-radius: 15px;
+            }
+
+            .lang-btn {
+                padding: 5px 10px;
+                font-size: 13px;
+                min-width: 60px;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                gap: 12px;
+                align-items: stretch;
+            }
+
+            .contact-btn {
+                padding: 16px 20px;
+                font-size: 15px;
+                justify-content: center;
+                width: 100%;
+                max-width: 280px;
+                margin: 0 auto;
+            }
+
+            .contact-btn i {
+                font-size: 17px;
+            }
+        }
+
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .language-toggle {
+                top: 18px;
+                right: 18px;
+            }
+
+            .lang-btn {
+                padding: 7px 14px;
+                font-size: 15px;
+            }
+
+            .contact-links {
+                gap: 20px;
+                justify-content: center;
+            }
+
+            .contact-btn {
+                padding: 15px 28px;
+                font-size: 15px;
+                min-width: 140px;
+            }
+
+            .contact-btn i {
+                font-size: 17px;
+            }
+        }
+
+        /* Language switching */
+        .lang-bn, .lang-en {
+            display: block;
+        }
+
+        body.lang-en .lang-bn,
+        body.lang-bn .lang-en {
+            display: none !important;
+        }
+
+        body.lang-en .lang-en {
+            display: block !important;
+        }
+
+        body.lang-bn .lang-bn {
+            display: block !important;
+        }
+    </style>
+</head>
+<body class="lang-bn">
+    <div class="container">
+        <div class="header">
+            <div class="language-toggle">
+                <button class="lang-btn active" data-lang="bn">বাংলা</button>
+                <button class="lang-btn" data-lang="en">English</button>
+            </div>
+            <div class="lang-bn">
+                <h1>প্রজেক্ট পরিসমাপ্তি</h1>
+                <p>বাংলাদেশ রেলওয়ে ট্রেন সিট ইনফো</p>
+                <p class="date">বুধবার, ১৪ অক্টোবর ২০২৫, দুপুর ১২:০০ টা</p>
+            </div>
+            <div class="lang-en">
+                <h1>Sunsetting the Project</h1>
+                <p>Bangladesh Railway Train Seat Info</p>
+                <p class="date">Wednesday, 14 October 2025, 12:00 PM</p>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="lang-bn">
+                <p>বিষয়গুলো দিন দিন কঠিন হয়ে যাচ্ছিল। তাই এক প্রকার বাধ্য হয়েই এই প্রজেক্টগুলো বন্ধ করে দিতে হলো।</p>
+
+                <h2>প্রজেক্টগুলোর প্রেক্ষাপট</h2>
+                <p>২০২৪ সালের জুন মাসের দিকে আমি বাংলাদেশ রেলওয়ে-সংক্রান্ত এই প্রজেক্টগুলোতে কাজ শুরু করি। তখনকার ওয়েবসাইটগুলো ছিল একেবারেই প্রাথমিক পর্যায়ে। শুধু কম্পিউটারের টার্মিনাল থেকেই এগুলো ব্যবহার করা যেত। প্রায় ছয় মাসের মতো টার্মিনাল-ভিত্তিক প্রজেক্ট বানিয়ে রেখেছিলাম।</p>
+                <p>পরবর্তীতে মনে হলো, আমি যে সমস্যার কারণে এই সমাধানগুলো তৈরি করেছি, সাধারণ জনগণও তো প্রতিনিয়ত সেসবের মুখোমুখি হয়। তাই ধীরে ধীরে টার্মিনাল-ভিত্তিক প্রজেক্টগুলোকে ওয়েবসাইটে রূপান্তর করার সিদ্ধান্ত নেই, যাতে যেকোনো সময় মোবাইল বা কম্পিউটার থেকে ব্যবহার করা যায়।</p>
+
+                <p>২০২৪ সালের নভেম্বর থেকে ২০২৫ সালের মে পর্যন্ত সবগুলো ওয়েবসাইট গুছিয়ে ফেলি। এর মধ্যে সিট ম্যাট্রিক্স ওয়েবসাইটটি জনগণের মাঝে ব্যাপক সাড়া ফেলে।
+                সে সময় আমি জগন্নাথ বিশ্ববিদ্যালয়ের সিএসই বিভাগে স্নাতক অধ্যয়নরত ছিলাম। সেমিস্টার ফাইনাল পরীক্ষা ও ক্লাসের ফাঁকেও এই প্রজেক্টগুলোতে সময় দিয়েছি।
+                এরপর ২০২৫ সালের অক্টোবর পর্যন্ত নিয়মিতভাবে ব্যবহারকারীর চাহিদা অনুযায়ী নতুন নতুন ফিচার যুক্ত করার চেষ্টা করেছি এবং প্রজেক্টগুলো মোটামুটি একটি স্থিতিশীল পর্যায়ে নিয়ে এসেছিলাম।</p>
+
+                <h2>যে কারণে প্রজেক্টগুলো বন্ধ হয়ে গেল</h2>
+                <p>২০২৫ সালের অক্টোবর মাসের ৯ তারিখ সহজ-সিনেসিস-ভিনসেন জেভি বাংলাদেশ রেলওয়ের ই-টিকিটিং প্ল্যাটফর্মের লগইন পেজে প্রথমবারের মতো ক্লাউডফ্লেয়ার ভেরিফিকেশন যুক্ত করে। আমি তিনটি ওয়েবসাইটেই ব্যবহারকারীদের কোনো ধরনের ইউজার ইনফো ছাড়াই সিট সম্পর্কিত বিস্তারিত তথ্য দেখাতাম। কিন্তু নতুন এই সিস্টেমের কারণে সেই পথটি বন্ধ হয়ে যায়। তবে ১৭ ঘণ্টার মধ্যে বিকল্প উপায় অনুসরণ করে আবারও তিনটি ওয়েবসাইট সচল করি।</p>
+
+                <p>উল্লেখ্য, ওয়েবসাইটের উপর চাপ কমাতে সেপ্টেম্বর মাসের ২৮ তারিখ আমি মাত্র ১ দিনে একটি অ্যান্ড্রয়েড অ্যাপ ডেভেলপ করি, যাতে ব্যবহারকারীরা নিজের ফোন থেকেই ওয়েবসাইটের অনুরূপ কাজগুলো করতে পারেন।
+                ওয়েবসাইট ও অ্যাপে ব্যবহারকারীর কোনো ডেটা চুরি করা হয় না; এজন্য সব প্রজেক্টের সোর্স কোড শুরু থেকেই ওপেন রাখা হয়েছিল, এখনও আছে।</p>
+
+                <p>যাহোক, ১২ অক্টোবর থেকে সহজ-সিনেসিস-ভিনসেন জেভি আবারও বাংলাদেশ রেলওয়ের ই-টিকিটিং প্ল্যাটফর্মে কিছু পরিবর্তন আনে। এবার ব্যবহারকারী যদি স্বল্প সময়ে ৩০টির বেশি রিকোয়েস্ট পাঠায়, তবে সিস্টেম স্বয়ংক্রিয়ভাবে তাকে ৫ মিনিটের জন্য ব্লক করে দেয়।
+                তিনটি ওয়েবসাইট ও অ্যান্ড্রয়েড অ্যাপে একটি ট্রেনের ডেটা দেখতে গড়পড়তায় ৫০-৬০টি রিকোয়েস্ট লাগে। সেখানে ৩০টির সীমাবদ্ধতা মানে পুরো সিস্টেম কার্যত অচল।
+                পাশাপাশি, ব্যবহারকারী যদি এই ধরনের রিকোয়েস্ট বারবার পাঠানোর চেষ্টা করেন, তবে সার্ভার থেকে তার অ্যাকাউন্ট ১৫ দিনের জন্য ব্লক করে দেওয়া হয়। তাই ব্যবহারকারীর অ্যাকাউন্ট সাময়িকভাবে ব্লক হয়ে যাওয়ার আশঙ্কা থাকায় আমি চাইনি আমার প্রজেক্টের কারণে কেউ সমস্যায় পড়ুক। এজন্য সবকিছু বিবেচনা করে রেলওয়ে-সংক্রান্ত আমার সকল প্রজেক্ট বন্ধ করার সিদ্ধান্ত নিয়েছি।</p>
+
+                <p>তবে আমি নিঃসন্দেহে এই উদ্যোগকে সাধুবাদ জানাই। অন্তত এই প্রজেক্টগুলো উপলক্ষ্য করে সহজ-সিনেসিস-ভিনসেন জেভি-র এই নতুন পদক্ষেপ যদি টিকেট ব্ল্যাকারদের বিরুদ্ধে কার্যকরী হয়, তবে তা অবশ্যই প্রশংসনীয়।</p>
+
+                <h2>প্রজেক্টগুলো আবার চালু হবে কি না</h2>
+                <p>এককথায় বললে, না। অন্তত যতদিন সহজ-সিনেসিস-ভিনসেন জেভি টিকিট ম্যানেজমেন্টের দায়িত্বে আছে, ততদিন পর্যন্ত নয়। বরং আমি আশা করি, সহজ-সিনেসিস-ভিনসেন জেভি তাদের সেবার মান আরও উন্নত করবে এবং ব্যবহারকারীদের জন্য আরও সহায়ক হবে।
+                তাছাড়া ছাত্রজীবনে থাকায় তখন সময় দিতে পেরেছিলাম; ভবিষ্যতে হয়তো সেইভাবে সময় বের করতে পারব না।
+                সবচেয়ে গুরুত্বপূর্ণ হলো, আমি ইতোমধ্যেই আমার জীবনের পথকে টেকনোলজি স্ট্যাক থেকে অন্য দিকে ঘুরিয়ে নিয়েছি। তাই অদূর ভবিষ্যতে এ ধরনের প্রজেক্টে আমার পক্ষ থেকে কিছু পাওয়ার সম্ভাবনা খুবই কম।</p>
+
+                <h2>প্রজেক্টগুলো থেকে আমার ব্যক্তিগত অর্জন</h2>
+                <p>সত্যি বলতে, এই প্রজেক্টগুলোর মাধ্যমে আমি রেস্ট এপিআই কিভাবে কাজ করে তা ভালোভাবে বুঝতে পেরেছি।
+                এছাড়া এমন কিছু টুলস ও টেকনোলজির সঙ্গে পরিচিত হয়েছি, যা এই প্রজেক্টে কাজ না করলে জানা হতো না।
+                ব্যক্তিগতভাবে বলতে গেলে, মানুষের উপকারে যদি সামান্যও ভূমিকা রাখতে পারি, সেটাই আমার সার্থকতা।
+                শেষের দিকে হয়তো অনেকেই দেখেছেন, ওয়েবসাইটগুলোতে আমি বিজ্ঞাপন বসিয়েছিলাম। এর উদ্দেশ্য ছিল অ্যান্ড্রয়েড অ্যাপটি প্লে স্টোরে প্রকাশের জন্য প্রয়োজনীয় অর্থ জোগাড় করা। কিন্তু সেখান থেকে আমি মাত্র $০.০৭ (প্রায় ৯ টাকা) উপার্জন করেছি।
+                দেড় বছরের এই সময়কালে কোনো আর্থিক লেনদেনে জড়িত হইনি। তাই ব্যক্তিগত লাভের প্রশ্নই আসে না। তবে পেয়েছি ব্যবহারকারীদের অসংখ্য ভালোবাসা। অনেক নেতিবাচক মন্তব্যও এসেছে, কিন্তু তার বিপরীতে ইতিবাচক প্রতিক্রিয়াও ছিল প্রশংসনীয়।</p>
+
+                <h2>প্রজেক্টগুলোর ভবিষ্যৎ</h2>
+                <p>প্রজেক্টগুলোর সোর্স কোড আর্কাইভ করে রাখা হয়েছে। যে কেউ নিজের মতো করে সেগুলো অধ্যয়ন বা ব্যবহার করতে পারবে। হয়তো আমার চেয়েও দক্ষ কেউ একদিন নতুনভাবে এই প্রজেক্টগুলো ফিরিয়ে আনবে সেই আশাই রাখি।</p>
+
+                <p>কোনো মতামত জানাতে চাইলে গুগল ফর্মটি পূরণ করতে পারেন বা সরাসরি আমাকে ইমেইল করতে পারেন।
+                সকলের মঙ্গল ও সুস্বাস্থ্য কামনা করে আমি, নিশাত মাহমুদ, বিদায় নিচ্ছি।
+                ভালো থাকবেন সবাই। আল্লাহ হাফেজ।</p>
+            </div>
+
+            <div class="lang-en">
+                <p>Things were becoming harder day by day. So, in a way, I was forced to discontinue these projects.</p>
+
+                <h2>Background of the Projects</h2>
+                <p>Around June 2024, I started working on these Bangladesh Railway-related projects. At that time, the existing websites were in a very early stage. They could only be used from a computer terminal. I kept them as terminal-based projects for about six months.</p>
+                <p>Later, I felt that the problems I tried to solve through these projects were the same problems people face regularly. So, I decided to slowly convert the terminal-based projects into websites, so that anyone could use them anytime from mobile or computer.</p>
+
+                <p>From November 2024 to May 2025, I completed organizing all the websites. Among them, the Seat Matrix website became very popular among the public. During that time, I was studying in the CSE Department at Jagannath University. Even during semester exams and classes, I continued working on these projects.
+                After that, until October 2025, I regularly tried to add new features based on user feedback and brought the projects to a stable condition.</p>
+
+                <h2>Why the Projects Were Discontinued</h2>
+                <p>On 9 October 2025, Shohoz-Synesis-Vincen JV added Cloudflare verification for the first time on the login page of the Bangladesh Railway e-ticketing platform.
+                In all three of my websites, users could view detailed seat information without giving any personal data. But due to this new system, that access method stopped working. However, within 17 hours, I managed to make all three websites active again using an alternative method.</p>
+
+                <p>It is worth mentioning that, to reduce pressure on the websites, I developed an Android app on 28 September within just one day. Through this app, users could perform similar tasks directly from their phones. Neither the websites nor the app collect or store any user data. For full transparency, all source codes were open from the beginning and are still available.</p>
+
+                <p>However, from 12 October, Shohoz-Synesis-Vincen JV again made some changes to the e-ticketing platform. Now, if a user sends more than 30 requests within a short time, the system automatically blocks that user for 5 minutes.
+                On average, viewing the data for one train from the websites or app requires around 50-60 requests. So, the 30-request limit has practically made the entire system non-functional.
+                In addition, if a user repeatedly attempts to send such requests, the server blocks their account for 15 days. Considering the possibility of users getting temporarily blocked, I didn't want anyone to face issues because of my project.
+                After considering everything, I decided to permanently close all my railway-related projects.</p>
+
+                <p>However, I sincerely appreciate this initiative. If this new step taken by Shohoz-Synesis-Vincen JV helps to curb ticket black-marketing, even to some extent, it will indeed be a praiseworthy move.</p>
+
+                <h2>Will the Projects Return?</h2>
+                <p>In one word, no.
+                At least not as long as Shohoz-Synesis-Vincen JV is handling ticket management. Rather, I hope that Shohoz-Synesis-Vincen JV will further improve the quality of their services and be more helpful to the users.
+                Besides, I was a student back then, so I could manage time for these works. In the future, that might not be possible.
+                Most importantly, I have already moved my life away from the technology field. So, it is quite unlikely that I will work on similar projects again anytime soon.</p>
+
+                <h2>What I Gained from These Projects</h2>
+                <p>Honestly, through these projects I learned how REST APIs actually work. I also got hands-on experience with many tools and technologies that I might not have learned otherwise.</p>
+                <p>From a personal point of view, I always try to do something, even small, that can help others. That's what gives me satisfaction.
+                Towards the end, some of you might have noticed that I added ads to the websites. The purpose was to raise a small amount of money to publish the Android app on the Play Store.
+                But I earned only $0.07 (around 9 BDT) from it.</p>
+                <p>During this one and a half year journey, I was never involved in any financial transactions related to these projects. So, there was no personal gain.
+                What I did gain was the love and appreciation from users. Though there were some negative comments, the positive ones were far more and truly inspiring.</p>
+
+                <h2>Future of the Projects</h2>
+                <p>All project source codes have been archived. Anyone can study or use them in their own way.
+                Maybe someone more skilled than me will one day bring these projects back in a new form; I sincerely hope that happens.</p>
+
+                <p>If you would like to share any feedback, you can fill out the Google Form or email me directly.
+                Wishing everyone good health and happiness.
+                I, Nishat Mahmud, take my leave.
+                Stay well, everyone. Allah Hafez.</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="lang-bn">
+                <h3>যোগাযোগ</h3>
+                <p>কোনো মতামত জানাতে চাইলে নিচের মাধ্যমগুলো ব্যবহার করতে পারেন:</p>
+            </div>
+            <div class="lang-en">
+                <h3>Contact</h3>
+                <p>If you would like to share any feedback, you can use the following methods:</p>
+            </div>
+            <div class="contact-links">
+                <a href="https://forms.gle/NV72PC1z75sq77tg7" target="_blank" class="contact-btn google-form">
+                    <i class="fas fa-file-alt"></i>
+                    <span class="lang-bn">গুগল ফর্ম</span>
+                    <span class="lang-en">Google Form</span>
+                </a>
+                <a href="mailto:nishatrhythm@gmail.com" class="contact-btn email">
+                    <i class="fas fa-envelope"></i>
+                    <span class="lang-bn">ইমেইল</span>
+                    <span class="lang-en">Email</span>
+                </a>
+                <a href="https://github.com/nishatrhythm" target="_blank" class="contact-btn github">
+                    <i class="fab fa-github"></i>
+                    <span class="lang-bn">গিটহাব</span>
+                    <span class="lang-en">GitHub</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const langBtns = document.querySelectorAll('.lang-btn');
+            const body = document.body;
+            const html = document.documentElement;
+
+            langBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    
+                    // Remove active class from all buttons
+                    langBtns.forEach(b => b.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Set language class on body
+                    body.className = body.className.replace(/\blang-\w+/g, '');
+                    body.classList.add('lang-' + lang);
+                    
+                    // Update html lang attribute
+                    html.setAttribute('lang', lang);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

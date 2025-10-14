@@ -1,4 +1,11 @@
 # 🚆 Bangladesh Railway Train Seat Availability Web Application
+<br><br>
+
+| 🚨 PROJECT DISCONTINUATION NOTICE 🚨 |
+|-------------------------------------|
+| Starting **October 14, 2025**, this project is **discontinued** and **no longer maintained**. All resources are archived now.<br><br>Thank you for your support over the long journey. Visit [trainseat.onrender.com/sunset](https://trainseat.onrender.com/sunset) to learn more about why this project was discontinued. |
+
+<br><br>
 
 A comprehensive web application to **check real-time seat availability** for Bangladesh Railway trains. This application provides **detailed seat information, coach-wise breakdown, and intelligent request management** — built using Flask + Vanilla JS + REST APIs.
 
